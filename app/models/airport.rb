@@ -1,9 +1,9 @@
 class Airport < ApplicationRecord
 
-    has_many_and_belongs_to :flights, dependent: :destroy
+    has_many :departing_flights, class_name: "Flight", 
+    foreign_key: "from_airport_id", dependent: :destroy
 
-    has_many :departing_flights, class: "Flight"
-
-    has_many :arriving_flights,  class: "Flight"
+    has_many :arriving_flights,  class_name: "Flight", 
+    foreign_key: "to_airport_id", dependent: :destroy
 
 end

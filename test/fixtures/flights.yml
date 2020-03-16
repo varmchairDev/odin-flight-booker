@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  take_of_time: 2020-03-16 17:35:03
-  arrival_time: 2020-03-16 17:35:03
-  start_id: 1
-  target_id: 1
+  take_off_time: 2020-03-16 22:52:53
+  arrival_time: 2020-03-16 22:52:53
+  from_airport_id: 1
+  to_airport_id: 1
 
 two:
-  take_of_time: 2020-03-16 17:35:03
-  arrival_time: 2020-03-16 17:35:03
-  start_id: 1
-  target_id: 1
+  take_off_time: 2020-03-16 22:52:53
+  arrival_time: 2020-03-16 22:52:53
+  from_airport_id: 1
+  to_airport_id: 1
