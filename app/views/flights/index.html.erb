@@ -1,0 +1,21 @@
+<h1>Select Flight</h1>
+
+<%= form_for(:flight, url: "/flights") do |f| %>
+  <%= f.collection_select(:from, Airport.all, :id, :city) %>
+
+  <%= f.collection_select(:to, Airport.all, :id, :city) %>
+
+  <br />
+
+  <%= f.label :passenger_count %>
+  <%= f.number_field :passanger_count, min:1, max:4 %>
+
+  <br />
+
+  <%= f.label :day %>
+  <%= f.date_field :pick_date, min: Date.today, max: @end_day %>
+
+  <br />
+
+  <%= f.submit :view_flights %>
+<% end %>
