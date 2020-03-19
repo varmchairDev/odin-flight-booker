@@ -12,7 +12,7 @@ class FlightsController < ApplicationController
   def handle_form
     @flights = Flight.where("date(take_off_time) = ? and from_airport_id = ? and to_airport_id = ?", 
                             params[:flight][:pick_date], 
-                            params[:flight][:from], params[:flight][:to])
+                            params[:flight][:from], params[:flight][:to]).order(take_off_time: :asc)
     @value_1 = params[:flight][:from]
     @value_2 = params[:flight][:to]
     @passenger_count = params[:flight][:passenger_count].to_i
