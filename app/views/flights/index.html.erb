@@ -1,36 +1,39 @@
 <h1>Select Flight</h1>
-<p><%= @datee %></p>
 <%= form_for(:flight, :action => :handle_form) do |f| %>
   <%= f.label :from %>
-  <%= f.collection_select(:from, Airport.all, :id, :city) %>
+  <%= f.collection_select(:from, Airport.all, :id, :city, :selected => @value_1.id ) %>
 
   <%= f.label :to %>
-  <%= f.collection_select(:to, Airport.all, :id, :city) %>
+  <%= f.collection_select(:to, Airport.all, :id, :city, :selected => @value_2.id ) %>
 
   <br />
 
   <%= f.label :passenger_count %>
-  <%= f.number_field :passanger_count, min:1, max:4 %>
+  <%= f.number_field :passenger_count, min:1, max:4, value:@passenger_count %>
 
   <br />
 
   <%= f.label :day %>
-  <%= f.date_field :pick_date, min: Date.today, max: @end_day %>
+  <%= f.date_field :pick_date, min: Date.today, max: @end_day, value:@selected_day %>
 
   <br />
 
-  <%= f.submit :view_flights %>
+  <%= f.submit :value => "View flight(s)" %>
 <% end %>
 
 <% if !@flights.empty? %>
+  <%= form_for(:pick, url: "booking/new", :action => :handle_booking) do |f| %>
   <ol>
-    <% @flights.each do |f| %>
+    <% @flights.each do |flight| %>
       <li>
-        <b>From: </b><%= Airport.find(f.from_airport_id).city %> - <b>To: </b> <%= Airport.find(f.to_airport_id).city %>
-        <br />
-        <b>Take off time: </b> <%= f.take_off_time %> - <b>Arrival time: </b> <%= f.arrival_time %>
+          <%= f.radio_button :flight, :value => "#{flight.from_airport_id},#{flight.to_airport_id}" %>
+          <%= "From: #{Airport.find(flight.from_airport_id).code} - To: #{Airport.find(flight.to_airport_id).code} | Take-off: #{flight.take_off_time.strftime('%H:%M')} - Arrival: #{flight.arrival_time.strftime('%H:%M')}" %>
       </li>
       <hr />
     <% end %>
+    <%= f.hidden_field :passenger_count, value:@passenger_count %>
+    <%= f.hidden_field :picked_date, value:@selected_day %>
+    <%= f.submit :value => "Select flight" %>
   </ol>
+  <% end %>
 <% end %>
