@@ -1,22 +1,32 @@
 class BookingsController < ApplicationController
 
   def new
-    redirect_back(fallback_location: "/flights") if params[:pick].nil?
-    @flight = Flight.find(params[:pick][:flight_id])
-    @passenger_count = params[:pick][:passenger_count]
-    @passenger_count.times { @booking = Booking.new }
-  end
-
-  def create
-    if @booking.save
-    else
+    if !params[:pick].nil?
+      @flight = Flight.find(params[:pick][:flight_id])
+      @passenger_count = params[:pick][:passenger_count].to_i
+      @booking = Booking.new
+      @passenger_count.times do 
+        @booking.passengers.build
+      end 
     end
   end
 
-  private
+  def create
+    passenger_count = params[:booking][:passenger_count].to_i
+    @booking = Booking.new(flight_id: params[:booking][:flight_id], 
+               passenger_count: passenger_count)
+    passenger_count.times do |n|
+      if @booking.passengers.build(name: params[:booking][:passenger]["name_#{n}".to_sym], email: params[:booking][:passenger]["email_#{n}".to_sym]).save
+      else
+        Booking.find(@booking.id).delete
+        redirect_to "/flights"
+      end
+    end
+    redirect_to "/bookings/#{@booking.id}"
+  end
 
-  def booking_parameters
-    params.require(:booking).permit(:flight_id, :passenger_id)
+  def show
+    @booking = Booking.find(params[:id])
   end
 
 end

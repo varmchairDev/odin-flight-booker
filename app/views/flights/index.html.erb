@@ -1,3 +1,4 @@
+<span style="text-align:center">
 <h1>Select Flight</h1>
 <%= form_for(:flight, :action => :handle_form) do |f| %>
   <%= f.label :from %>
@@ -13,7 +14,7 @@
 
   <br />
 
-  <%= f.label :day %>
+  <%= f.label :date %>
   <%= f.date_field :pick_date, min: Date.today, max: @end_day, value:@selected_day %>
 
   <br />
@@ -36,3 +37,4 @@
   </ol>
   <% end %>
 <% end %>
+</span>

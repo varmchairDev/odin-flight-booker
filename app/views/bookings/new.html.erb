@@ -1,2 +1,26 @@
-<h1>Bookings#new</h1>
-<p>Find me in app/views/bookings/new.html.erb</p>
+<span style="text-align:center">
+<h1><%= @flight.from_airport.city %> - <%= @flight.to_airport.city %></h1>
+<h2><%= @flight.take_off_time.strftime('%d %B %Y') %></h2>
+<h3>Take-off: <%= @flight.take_off_time.strftime('%H:%M')  %> | Arrival: <%= @flight.arrival_time.strftime('%H:%M') %></h3>
+<h4>Flight id: <%= @flight.id %></h4>
+
+<hr />
+
+<%= form_for @booking do |f| %>
+    <%= f.hidden_field :flight_id, value:@flight.id %>
+    <%= f.hidden_field :passenger_count, value:@passenger_count %>
+    <% @passenger_count.times do |n| %>
+        <%= f.fields_for(:passenger) do |passenger| %>
+            <%= passenger.label :name %>
+            <%= passenger.text_field "name_#{n}".to_sym %>
+
+            <%= passenger.label :email %>
+            <%= passenger.text_field "email_#{n}".to_sym %>
+        <% end %>
+    <% end %>
+    <%= f.submit value:"Book flight" %>
+<% end %>
+</span>
+
+
+

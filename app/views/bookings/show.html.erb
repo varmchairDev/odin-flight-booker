@@ -1,0 +1,17 @@
+<% flight = Flight.find(@booking.flight_id) %>
+
+<span style="text-align:center">
+<h1><%= flight.from_airport.city %> - <%= flight.to_airport.city %></h1>
+<h2><%= flight.take_off_time.strftime('%d %B %Y') %></h2>
+<h3>Take-off: <%= flight.take_off_time.strftime('%H:%M')  %> | Arrival: <%= flight.arrival_time.strftime('%H:%M') %></h3>
+<h4>Flight id: <%= flight.id %></h4>
+
+<hr />
+
+<h2>Passenger Info</h2>
+<% @booking.passengers.each do |p| %>
+    <p>Name: <b><%= p.name %></b></p>
+    <p>Email: <b><%= p.email %></b></p>
+    <hr />
+<% end %>
+</span>
