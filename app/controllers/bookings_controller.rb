@@ -22,6 +22,9 @@ class BookingsController < ApplicationController
         redirect_to "/flights"
       end
     end
+    @booking.passengers.each do |passenger|
+      PassengerMailer.thank_you_email(passenger).deliver_now!
+    end
     redirect_to "/bookings/#{@booking.id}"
   end
 
